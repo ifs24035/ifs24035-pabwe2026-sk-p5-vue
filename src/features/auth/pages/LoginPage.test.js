@@ -23,8 +23,8 @@ const setup = async (initialState) => {
 }
 
 const fill = async (wrapper, email, password) => {
-  await wrapper.get('#email').setValue(email)
-  await wrapper.get('#password').setValue(password)
+  await wrapper.get('#login-email-input').setValue(email)
+  await wrapper.get('#login-password-input').setValue(password)
 }
 
 describe('LoginPage', () => {
@@ -35,6 +35,14 @@ describe('LoginPage', () => {
 
     expect(wrapper.text()).toContain('Masuk')
     expect(wrapper.get('a[href="/auth/register"]').text()).toContain('Daftar sekarang')
+  })
+
+  it('menyediakan id elemen yang dipakai oleh audit otomatis', async () => {
+    const { wrapper } = await setup()
+
+    expect(wrapper.find('#login-email-input').exists()).toBe(true)
+    expect(wrapper.find('#login-password-input').exists()).toBe(true)
+    expect(wrapper.find('#login-submit-button').exists()).toBe(true)
   })
 
   it('membersihkan errors lama saat halaman dibuka', async () => {
@@ -90,13 +98,13 @@ describe('LoginPage', () => {
 
   it('tombol mata menampilkan dan menyembunyikan kata sandi', async () => {
     const { wrapper } = await setup()
-    expect(wrapper.get('#password').attributes('type')).toBe('password')
+    expect(wrapper.get('#login-password-input').attributes('type')).toBe('password')
 
     await wrapper.get('button[aria-label="Tampilkan kata sandi"]').trigger('click')
-    expect(wrapper.get('#password').attributes('type')).toBe('text')
+    expect(wrapper.get('#login-password-input').attributes('type')).toBe('text')
 
     await wrapper.get('button[aria-label="Sembunyikan kata sandi"]').trigger('click')
-    expect(wrapper.get('#password').attributes('type')).toBe('password')
+    expect(wrapper.get('#login-password-input').attributes('type')).toBe('password')
   })
 
   it('menonaktifkan tombol saat proses login berjalan', async () => {

@@ -46,11 +46,11 @@ onMounted(() => auth.clearErrors())
 
     <form class="mt-8 space-y-5" novalidate @submit.prevent="handleSubmit">
       <div>
-        <label for="email" class="mb-1.5 block text-sm font-semibold">Email</label>
+        <label for="login-email-input" class="mb-1.5 block text-sm font-semibold">Email</label>
         <div class="relative">
           <Mail class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
-            id="email"
+            id="login-email-input"
             type="email"
             class="input pl-11"
             placeholder="nama@email.com"
@@ -63,11 +63,11 @@ onMounted(() => auth.clearErrors())
       </div>
 
       <div>
-        <label for="password" class="mb-1.5 block text-sm font-semibold">Kata Sandi</label>
+        <label for="login-password-input" class="mb-1.5 block text-sm font-semibold">Kata Sandi</label>
         <div class="relative">
           <Lock class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
-            id="password"
+            id="login-password-input"
             :type="showPassword ? 'text' : 'password'"
             class="input px-11"
             placeholder="Minimal 6 karakter"
@@ -88,7 +88,12 @@ onMounted(() => auth.clearErrors())
         <p v-if="errorOf('password')" class="mt-1.5 text-xs text-rose-600">{{ errorOf('password') }}</p>
       </div>
 
-      <button type="submit" class="btn-primary w-full" :disabled="auth.isAuthLogin">
+      <button
+        id="login-submit-button"
+        type="submit"
+        class="btn-primary w-full"
+        :disabled="auth.isAuthLogin"
+      >
         <Loader2 v-if="auth.isAuthLogin" class="h-4 w-4 animate-spin" />
         <LogIn v-else class="h-4 w-4" />
         {{ auth.isAuthLogin ? 'Memproses...' : 'Masuk' }}
