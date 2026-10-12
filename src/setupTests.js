@@ -1,5 +1,10 @@
 import '@testing-library/jest-dom/vitest'
-import { vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
+
+// Komponen yang dimuat dinamis harus selesai dimuat sebelum tes berakhir
+afterEach(async () => {
+  await vi.dynamicImportSettled()
+})
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

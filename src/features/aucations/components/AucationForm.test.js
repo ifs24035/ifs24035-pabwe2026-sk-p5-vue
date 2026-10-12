@@ -1,9 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Editor from '@toast-ui/editor'
+import { flush } from '../../../test-utils'
 import AucationForm from './AucationForm.vue'
 
-const mountForm = (props = {}) => mount(AucationForm, { props })
+const mountForm = async (props = {}) => {
+  const wrapper = mount(AucationForm, { props })
+  await flush()
+  return wrapper
+}
 const lastEditor = () => Editor.instances.at(-1)
 
 const fill = async (wrapper, { title = 'Keyboard', description = 'Mulus', startBid = '200000', closedAt = '2999-01-01T10:00' } = {}) => {
@@ -18,8 +23,8 @@ describe('AucationForm', () => {
     Editor.instances.length = 0
   })
 
-  it('menampilkan form kosong dengan label tombol bawaan', () => {
-    const wrapper = mountForm()
+  it('menampilkan form kosong dengan label tombol bawaan', async () => {
+    const wrapper = await mountForm()
 
     expect(wrapper.get('#aucation-title').element.value).toBe('')
     expect(wrapper.get('button[type="submit"]').text()).toContain('Simpan')
@@ -27,7 +32,7 @@ describe('AucationForm', () => {
   })
 
   it('menampilkan pesan validasi untuk form kosong', async () => {
-    const wrapper = mountForm()
+    const wrapper = await mountForm()
 
     await wrapper.get('form').trigger('submit')
 
@@ -39,7 +44,7 @@ describe('AucationForm', () => {
   })
 
   it('menolak batas waktu yang sudah lewat', async () => {
-    const wrapper = mountForm()
+    const wrapper = await mountForm()
 
     await fill(wrapper, { closedAt: '2020-01-01T10:00' })
     await wrapper.get('form').trigger('submit')
@@ -49,7 +54,7 @@ describe('AucationForm', () => {
   })
 
   it('memancarkan submit dengan payload yang sudah dibersihkan', async () => {
-    const wrapper = mountForm()
+    const wrapper = await mountForm()
 
     await fill(wrapper, { title: '  Keyboard  ' })
     await wrapper.get('form').trigger('submit')
@@ -63,15 +68,15 @@ describe('AucationForm', () => {
   })
 
   it('menampilkan pratinjau rupiah saat harga awal diisi', async () => {
-    const wrapper = mountForm()
+    const wrapper = await mountForm()
 
     await wrapper.get('#aucation-start-bid').setValue('15000')
 
     expect(wrapper.text()).toMatch(/Rp\s?15\.000/)
   })
 
-  it('mengisi form dari data awal saat mode ubah', () => {
-    const wrapper = mountForm({
+  it('mengisi form dari data awal saat mode ubah', async () => {
+    const wrapper = await mountForm({
       initial: {
         title: 'Oculus',
         description: 'Second mulus',
@@ -86,8 +91,8 @@ describe('AucationForm', () => {
     expect(lastEditor().options.initialValue).toBe('Second mulus')
   })
 
-  it('menampilkan pesan error dari server di bawah field', () => {
-    const wrapper = mountForm({
+  it('menampilkan pesan error dari server di bawah field', async () => {
+    const wrapper = await mountForm({
       errors: {
         title: ['Judul sudah dipakai'],
         description: ['Deskripsi terlalu pendek'],
@@ -102,8 +107,8 @@ describe('AucationForm', () => {
     expect(wrapper.text()).toContain('Tanggal tidak valid')
   })
 
-  it('menonaktifkan tombol saat loading dan memakai label kustom', () => {
-    const wrapper = mountForm({ loading: true, submitLabel: 'Buat Lelang' })
+  it('menonaktifkan tombol saat loading dan memakai label kustom', async () => {
+    const wrapper = await mountForm({ loading: true, submitLabel: 'Buat Lelang' })
     const submit = wrapper.get('button[type="submit"]')
 
     expect(submit.attributes('disabled')).toBeDefined()
@@ -111,7 +116,7 @@ describe('AucationForm', () => {
   })
 
   it('memancarkan cancel saat tombol Batal diklik', async () => {
-    const wrapper = mountForm()
+    const wrapper = await mountForm()
 
     await wrapper.get('button[type="button"]').trigger('click')
 

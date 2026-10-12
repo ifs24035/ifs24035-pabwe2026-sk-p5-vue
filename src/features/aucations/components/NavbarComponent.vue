@@ -52,14 +52,14 @@ onMounted(() => users.fetchProfile())
           type="button"
           class="flex cursor-pointer items-center gap-2.5 rounded-full py-1 pl-1 pr-3 transition hover:bg-slate-100"
           aria-haspopup="menu"
-          :aria-expanded="isMenuOpen"
+          :aria-label="users.profile ? `Menu akun ${users.profile.name}` : 'Menu akun'"
           @click="isMenuOpen = !isMenuOpen"
         >
           <UserAvatar :name="users.profile?.name" :photo="users.profile?.photo" size="h-9 w-9" />
           <span class="hidden max-w-32 truncate text-sm font-semibold sm:block">
             {{ users.profile?.name ?? 'Memuat...' }}
           </span>
-          <ChevronDown class="h-4 w-4 text-slate-400" />
+          <ChevronDown class="h-4 w-4 text-slate-500" />
         </button>
 
         <template v-if="isMenuOpen">

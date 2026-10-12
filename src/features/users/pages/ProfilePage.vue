@@ -130,7 +130,9 @@ onMounted(async () => {
           <h2 class="mt-4 text-lg font-extrabold">{{ store.profile.name }}</h2>
           <p class="text-sm text-slate-500">{{ store.profile.email }}</p>
         </div>
-        <div v-else class="mx-auto h-28 w-28 animate-pulse rounded-full bg-slate-100" data-testid="profile-loading" />
+        <div v-else class="flex h-44 flex-col items-center" data-testid="profile-loading">
+          <div class="h-28 w-28 animate-pulse rounded-full bg-slate-200" />
+        </div>
 
         <input
           ref="photoInput"
@@ -157,7 +159,7 @@ onMounted(async () => {
             <Save v-else class="h-4 w-4" />
             Simpan Foto
           </button>
-          <p class="text-xs text-slate-400">Format gambar, maksimal 2 MB.</p>
+          <p class="text-xs text-slate-500">Format gambar, maksimal 2 MB.</p>
         </div>
       </div>
 

@@ -84,7 +84,7 @@ onMounted(async () => {
       <div class="card relative w-full max-w-sm p-8 text-center">
         <button
           type="button"
-          class="absolute right-4 top-4 cursor-pointer rounded-lg p-1 text-slate-400 hover:text-slate-600"
+          class="absolute right-4 top-4 cursor-pointer rounded-lg p-1 text-slate-500 hover:text-slate-700"
           aria-label="Tutup"
           @click="store.clearUser()"
         >
@@ -97,14 +97,16 @@ onMounted(async () => {
         <h2 class="mt-4 text-xl font-extrabold">{{ store.user.name }}</h2>
 
         <dl class="mt-6 space-y-3 text-left text-sm">
+          <div class="mt-6 space-y-3 text-left text-sm">
           <div class="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
             <Mail class="h-4 w-4 text-brand-600" />
-            <dd>{{ store.user.email }}</dd>
+            <p>{{ store.user.email }}</p>
           </div>
           <div class="flex items-center gap-3 rounded-xl bg-slate-50 p-3">
             <CalendarDays class="h-4 w-4 text-brand-600" />
-            <dd>Bergabung {{ formatDate(store.user.created_at) }}</dd>
+            <p>Bergabung {{ formatDate(store.user.created_at) }}</p>
           </div>
+        </div>
         </dl>
       </div>
     </div>

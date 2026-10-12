@@ -2,6 +2,26 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
+// Menyisipkan CSS awal langsung ke index.html agar render pertama tidak menunggu unduhan CSS
+const inlineEntryCss = () => ({
+  name: 'inline-entry-css',
+  apply: 'build',
+  transformIndexHtml: {
+    order: 'post',
+    handler(html, { bundle }) {
+      let result = html
+      Object.entries(bundle).forEach(([fileName, asset]) => {
+        if (!fileName.endsWith('.css')) return
+        const link = new RegExp(`<link[^>]*href="[^"]*${fileName.split('/').pop()}"[^>]*>`)
+        if (!link.test(result)) return
+        result = result.replace(link, () => `<style>${asset.source}</style>`)
+        delete bundle[fileName]
+      })
+      return result
+    },
+  },
+})
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
@@ -10,9 +30,14 @@ export default defineConfig(({ mode }) => {
       // Alamat absolut seperti /logo.svg (folder public) tidak diubah menjadi import aset
       vue({ template: { transformAssetUrls: { includeAbsolute: false } } }),
       tailwindcss(),
+      inlineEntryCss(),
     ],
     server: {
       port: Number(env.APP_PORT) || 3000,
+    },
+    build: {
+      sourcemap: true,
+      target: 'esnext',
     },
     optimizeDeps: {
       include: [

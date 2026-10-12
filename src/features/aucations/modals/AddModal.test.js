@@ -21,6 +21,7 @@ const setup = async (props = { open: true }, state = {}) => {
 }
 
 const fillAndSubmit = async (wrapper) => {
+  await flush()
   await wrapper.get('#aucation-title').setValue('Keyboard')
   Editor.instances.at(-1).type('Mulus')
   await wrapper.get('#aucation-start-bid').setValue('200000')

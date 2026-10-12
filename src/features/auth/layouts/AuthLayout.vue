@@ -24,9 +24,9 @@ const features = [
 
       <div class="relative space-y-8">
         <div>
-          <h1 class="text-4xl font-extrabold leading-tight">
+          <p class="text-4xl font-extrabold leading-tight">
             Temukan barang impian,<br />menangkan dengan tawaran terbaik.
-          </h1>
+          </p>
           <p class="mt-4 max-w-md text-brand-100">
             Platform lelang untuk civitas Del. Pasang barangmu atau ikut menawar dalam hitungan detik.
           </p>

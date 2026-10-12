@@ -8,7 +8,7 @@ describe('UserAvatar', () => {
     const img = wrapper.get('img')
 
     expect(img.attributes('src')).toBe('https://x.test/a.png')
-    expect(img.attributes('alt')).toBe('Kueng')
+    expect(img.attributes('alt')).toBe('')
   })
 
   it('menampilkan inisial bila foto kosong', () => {

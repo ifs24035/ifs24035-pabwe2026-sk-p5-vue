@@ -65,7 +65,7 @@ const handleSubmit = async () => {
     <div class="space-y-5">
       <label
         for="cover-input"
-        class="relative flex h-56 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 text-slate-400 transition hover:border-brand-400 hover:bg-brand-50"
+        class="relative flex h-56 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 text-slate-600 transition hover:border-brand-400 hover:bg-brand-50"
       >
         <img
           v-if="previewUrl || aucation.cover"
@@ -86,7 +86,7 @@ const handleSubmit = async () => {
         aria-label="Pilih gambar cover"
         @change="handleSelect"
       />
-      <p class="text-xs text-slate-400">Format gambar (JPG, PNG, WEBP), maksimal 2 MB.</p>
+      <p class="text-xs text-slate-500">Format gambar (JPG, PNG, WEBP), maksimal 2 MB.</p>
 
       <div class="flex justify-end gap-3">
         <button type="button" class="btn-secondary" @click="close">Batal</button>

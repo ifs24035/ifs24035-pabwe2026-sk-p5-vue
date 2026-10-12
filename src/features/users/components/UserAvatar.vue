@@ -10,7 +10,7 @@ defineProps({
   <img
     v-if="photo"
     :src="photo"
-    :alt="name"
+    alt=""
     :class="[size, 'shrink-0 rounded-full object-cover ring-2 ring-white']"
   />
   <div

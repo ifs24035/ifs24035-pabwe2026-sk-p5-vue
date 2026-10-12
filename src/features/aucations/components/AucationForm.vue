@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { Loader2, Save } from 'lucide-vue-next'
-import MarkdownEditor from './MarkdownEditor.vue'
 import { useInput } from '../../../hooks/useInput'
 import { formatRupiah, toApiDateTime, toInputDateTime } from '../../../helpers/toolsHelper'
+
+// Editor Markdown berukuran besar, jadi baru diunduh saat form dibuka
+const MarkdownEditor = defineAsyncComponent(() => import('./MarkdownEditor.vue'))
 
 const props = defineProps({
   initial: { type: Object, default: () => ({}) },
@@ -64,7 +66,9 @@ const handleSubmit = () => {
 
     <div>
       <span class="mb-1.5 block text-sm font-semibold">Deskripsi</span>
-      <MarkdownEditor :model-value="description" @update:model-value="onDescriptionChange" />
+      <div class="min-h-80">
+        <MarkdownEditor :model-value="description" @update:model-value="onDescriptionChange" />
+      </div>
       <p v-if="errorOf('description')" class="mt-1.5 text-xs text-rose-600">{{ errorOf('description') }}</p>
     </div>
 
@@ -82,7 +86,7 @@ const handleSubmit = () => {
           :value="startBid"
           @input="onStartBidChange"
         />
-        <p class="mt-1.5 text-xs text-slate-400">{{ formatRupiah(startBid) }}</p>
+        <p class="mt-1.5 text-xs text-slate-500">{{ formatRupiah(startBid) }}</p>
         <p v-if="errorOf('start_bid')" class="mt-1 text-xs text-rose-600">{{ errorOf('start_bid') }}</p>
       </div>
 

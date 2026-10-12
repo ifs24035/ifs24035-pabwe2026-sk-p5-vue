@@ -1,5 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { createMemoryHistory, createRouter } from 'vue-router'
+import { vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { useAuthStore } from './features/auth/states/authStore'
 import { useUsersStore } from './features/users/states/usersStore'
@@ -59,7 +60,8 @@ export async function renderWithProviders(component, options = {}) {
   return { wrapper, router, pinia }
 }
 
-// Menunggu semua promise dan render DOM selesai
+// Menunggu import dinamis, semua promise, dan render DOM selesai
 export const flush = async () => {
+  await vi.dynamicImportSettled()
   await new Promise((resolve) => setTimeout(resolve, 0))
 }

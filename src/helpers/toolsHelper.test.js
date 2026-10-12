@@ -19,15 +19,15 @@ vi.mock('sweetalert2', () => ({ default: { fire: vi.fn() } }))
 describe('dialog helpers', () => {
   beforeEach(() => vi.clearAllMocks())
 
-  it('showSuccessDialog memakai icon success', () => {
-    showSuccessDialog('Selesai')
+  it('showSuccessDialog memakai icon success', async () => {
+    await showSuccessDialog('Selesai')
     expect(Swal.fire).toHaveBeenCalledWith(
       expect.objectContaining({ icon: 'success', title: 'Berhasil', text: 'Selesai' }),
     )
   })
 
-  it('showErrorDialog memakai icon error', () => {
-    showErrorDialog('Gagal', 'Oops')
+  it('showErrorDialog memakai icon error', async () => {
+    await showErrorDialog('Gagal', 'Oops')
     expect(Swal.fire).toHaveBeenCalledWith(
       expect.objectContaining({ icon: 'error', title: 'Oops', text: 'Gagal' }),
     )

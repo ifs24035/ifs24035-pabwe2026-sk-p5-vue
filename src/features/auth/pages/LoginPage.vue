@@ -41,7 +41,7 @@ onMounted(() => auth.clearErrors())
 
 <template>
   <div>
-    <h2 class="text-3xl font-extrabold tracking-tight">Masuk</h2>
+    <h1 class="text-3xl font-extrabold tracking-tight">Masuk</h1>
     <p class="mt-2 text-sm text-slate-500">Silakan masuk untuk mulai mengikuti lelang.</p>
 
     <form class="mt-8 space-y-5" novalidate @submit.prevent="handleSubmit">
@@ -77,7 +77,7 @@ onMounted(() => auth.clearErrors())
           />
           <button
             type="button"
-            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer rounded-lg p-1 text-slate-400 hover:text-slate-600"
+            class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer rounded-lg p-1 text-slate-500 hover:text-slate-700"
             :aria-label="showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'"
             @click="showPassword = !showPassword"
           >

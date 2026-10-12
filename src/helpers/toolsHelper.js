@@ -1,20 +1,23 @@
-import Swal from 'sweetalert2'
-
 const baseOptions = {
   confirmButtonColor: '#4f46e5',
   cancelButtonColor: '#94a3b8',
   customClass: { popup: 'rounded-2xl' },
 }
 
+// SweetAlert2 cukup besar, jadi baru diunduh saat dialog pertama kali ditampilkan
+const fire = async (options) => {
+  const { default: Swal } = await import('sweetalert2')
+  return Swal.fire({ ...baseOptions, ...options })
+}
+
 export const showSuccessDialog = (message, title = 'Berhasil') =>
-  Swal.fire({ ...baseOptions, icon: 'success', title, text: message, timer: 2000, showConfirmButton: false })
+  fire({ icon: 'success', title, text: message, timer: 2000, showConfirmButton: false })
 
 export const showErrorDialog = (message, title = 'Terjadi Kesalahan') =>
-  Swal.fire({ ...baseOptions, icon: 'error', title, text: message })
+  fire({ icon: 'error', title, text: message })
 
 export const showConfirmDialog = async (title, text, confirmText = 'Ya, lanjutkan') => {
-  const result = await Swal.fire({
-    ...baseOptions,
+  const result = await fire({
     icon: 'question',
     title,
     text,

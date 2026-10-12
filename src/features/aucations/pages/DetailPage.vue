@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   ArrowLeft,
@@ -14,7 +14,6 @@ import {
 } from 'lucide-vue-next'
 import AucationCover from '../components/AucationCover.vue'
 import CountdownBadge from '../components/CountdownBadge.vue'
-import MarkdownViewer from '../components/MarkdownViewer.vue'
 import BidModal from '../modals/BidModal.vue'
 import ChangeModal from '../modals/ChangeModal.vue'
 import ChangeCoverModal from '../modals/ChangeCoverModal.vue'
@@ -30,6 +29,9 @@ import {
   getHighestBid,
   showConfirmDialog,
 } from '../../../helpers/toolsHelper'
+
+// Viewer Markdown berukuran besar, jadi dimuat terpisah dari halaman
+const MarkdownViewer = defineAsyncComponent(() => import('../components/MarkdownViewer.vue'))
 
 const route = useRoute()
 const router = useRouter()
@@ -95,13 +97,14 @@ const handleDeleteBid = async () => {
     </RouterLink>
 
     <div v-if="store.isAucation" class="grid gap-6 lg:grid-cols-5" data-testid="detail-loading">
+      <h1 class="sr-only">Memuat detail lelang</h1>
       <div class="card h-96 animate-pulse bg-slate-100 lg:col-span-3" />
       <div class="card h-96 animate-pulse bg-slate-100 lg:col-span-2" />
     </div>
 
     <div v-else-if="!store.aucation" class="card flex flex-col items-center gap-2 p-12 text-center">
       <SearchX class="h-12 w-12 text-slate-300" />
-      <p class="text-lg font-bold">Lelang tidak ditemukan</p>
+      <h1 class="text-lg font-bold">Lelang tidak ditemukan</h1>
       <p class="text-sm text-slate-500">Lelang mungkin sudah dihapus atau alamatnya salah.</p>
     </div>
 
@@ -165,12 +168,12 @@ const handleDeleteBid = async () => {
                   {{ highestBid ? formatRupiah(highestBid) : 'Belum ada tawaran' }}
                 </dd>
               </div>
-              <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4">
-                <CalendarClock class="h-5 w-5 text-brand-600" />
-                <div>
-                  <dt class="text-xs text-slate-500">Ditutup pada</dt>
-                  <dd class="font-semibold">{{ formatDate(store.aucation.closed_at) }}</dd>
-                </div>
+              <div class="rounded-2xl bg-slate-50 p-4">
+                <dt class="flex items-center gap-2 text-xs text-slate-500">
+                  <CalendarClock class="h-4 w-4 text-brand-600" />
+                  Ditutup pada
+                </dt>
+                <dd class="mt-0.5 font-semibold">{{ formatDate(store.aucation.closed_at) }}</dd>
               </div>
               <div v-if="myBid" class="rounded-2xl border border-brand-200 bg-brand-50 p-4">
                 <dt class="text-xs text-brand-700">Penawaranmu</dt>
